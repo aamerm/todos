@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "babel": "^6.23.0",
+    "babel-preset-react": "^6.24.1",
+    "chai": "^3.5.0",
+    "chai-enzyme": "^0.6.1",
+    "enzyme": "^2.8.2",
+    "mocha": "^3.3.0",
+    "mocha-webpack": "^0.7.0",
+    "react": "^15.5.4",
+    "react-addons-test-utils": "^15.5.1",
+    "react-dom": "^15.5.4",
+    "react-test-renderer": "^15.5.4",
+    "webpack": "^2.4.1",
+    "webpack-dev-server": "^2.4.4"
+  },
+  "scripts": {
+    "start": "webpack-dev-server",
+    "test": "mocha-webpack test/**/*_tests.js --webpack-config webpack.config.js --watch"
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-preset-env": "^1.4.0"
+  }
+}
