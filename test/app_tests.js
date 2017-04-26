@@ -11,15 +11,10 @@ chai.use(chaiEnzyme());
 chai.use(sinonChai);
 
 describe('App', ()=> {
-	it('should print 1 equals 1', () => {
-		// if( 1!==1) throw new Error("failed");
-		// chai.expect(2).to.equal(1);
-		expect(1).to.equal(1);
-	});
-
 	it('should render h1 with todos', function() {
 		const state = {todos: 1};
-		const wrapper = shallow(<App />, {context: {store: {getState: ()=> state}}});
+		const subscribeSpy = sinon.spy();
+		const wrapper = shallow(<App />, {context: {store: {getState: ()=> state, subscribe: subscribeSpy}}});
 		// expect(wrapper.find('h1')).to.have.length(1);
 		expect(wrapper).to.have.className('app');
 		expect(wrapper).to.have.descendants('h1');
@@ -31,11 +26,13 @@ describe('App', ()=> {
 	it('should dispatch with TOGGLE_COMPLETED and index when TodoList onToggleCompletedTodo is called', ()=> {
 		const state = {todos: 1};
 		const dispatchSpy = sinon.spy();
+		const subscribeSpy = sinon.spy();
 		const context = {
 			context: {
 				store: {
 					getState: ()=> state,
-					dispatch: dispatchSpy
+					dispatch: dispatchSpy,
+					subscribe: subscribeSpy
 				}
 			}
 		}

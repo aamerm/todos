@@ -4,35 +4,35 @@ import chai, {expect} from 'chai';
 import chaiEnzyme from 'chai-enzyme';
 import {TodoList} from '../src/todolist';
 import {Todo} from '../src/todo';
+import sinon from 'sinon';
+import sinonChai from 'sinon-chai';
 
 chai.use(chaiEnzyme());
+chai.use(sinonChai);
 
 describe ('TodoList', () => {
-	let wrapper;
+	let wrapper, props;
 
 	beforeEach(() => {
-		wrapper = shallow(<TodoList/>);
+		props = {
+			todos: [
+				{text: "hello", completed: false}
+			],
+			onToggleCompletedTodo: sinon.spy()
+		}
+		wrapper = shallow(<TodoList {...props} />);
 	});
 
-	it('should render 2 default todos', () => {
-		expect(wrapper.find('Todo')).to.have.length(2);
-		// expect(wrapper).to.have.exactly(2).descendants('Todo');
+	it('should render the todos that are passed', () => {
+		expect(wrapper).to.have.descendants('Todo');
+		expect(wrapper.find('Todo')).to.have.prop('completed', false);
+		expect(wrapper.find('Todo')).to.have.prop('text', 'hello');
 	});
-
-	it('should render first Todo with Text Todo 1 and completed false', ()=>{
-		expect(wrapper.find('Todo').at(0)).to.have.prop('text', 'Todo 1');
-		expect(wrapper.find('Todo').at(0)).to.have.prop('completed', false);
-	})
-
-	it('should render second Todo with Text Todo 2 and completed false', ()=>{
-		const secondTodo = wrapper.find('Todo').at(1);
-		expect(secondTodo).to.have.prop('text', 'Todo 2');
-		expect(secondTodo).to.have.prop('completed', false);
-	})
 
 	it('should render Todo with completed as toggled when onToggleCompleted is called', () => {
-		wrapper.find('Todo').first().simulate('toggleCompleted', {});
-		// wrapper.find('Todo').first().prop.('onToggleCompleted')({preventDefault: preventDefaultSpy});
-		expect(wrapper.find('Todo').first()).to.have.prop('completed', true);
-	})
+		wrapper.find('Todo').first().simulate('toggleCompleted');
+		expect(props.onToggleCompletedTodo).to.have.been.calledWith(0);
+	});
+
+	// it.only
 });
