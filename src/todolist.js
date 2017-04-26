@@ -1,10 +1,6 @@
 import React from 'react';
 import {Todo} from './todo';
 
-const handleToggleCompleted = () => {
-	
-};
-
 export class TodoList extends React.Component {
 	constructor(props){
 		super(props);
@@ -21,11 +17,21 @@ export class TodoList extends React.Component {
 		// this.ownState();
 		// this.forceUpdate();
 	}
-	
+
+	handleToggleCompleted(index) {
+		const newState = JSON.parse(JSON.stringify(this.state));
+		newState.todos[index].completed = !newState.todos[index].completed;
+		this.setState(newState);
+		// this.state.todos[i].completed = false;
+	};
+
 	render() {
 		return <ul>{
-			this.state.todos.map(todo=> <li>
-				<Todo completed={todo.completed} text={todo.text}/>
+			this.state.todos.map((todo, i)=> <li>
+				<Todo completed={todo.completed} 
+				      text={todo.text} 
+				      onToggleCompleted={()=> this.handleToggleCompleted(i)}
+				/>
 			</li>)
 			}</ul>;
 	}

@@ -29,4 +29,10 @@ describe ('TodoList', () => {
 		expect(secondTodo).to.have.prop('text', 'Todo 2');
 		expect(secondTodo).to.have.prop('completed', false);
 	})
+
+	it('should render Todo with completed as toggled when onToggleCompleted is called', () => {
+		wrapper.find('Todo').first().simulate('toggleCompleted', {});
+		// wrapper.find('Todo').first().prop.('onToggleCompleted')({preventDefault: preventDefaultSpy});
+		expect(wrapper.find('Todo').first()).to.have.prop('completed', true);
+	})
 });
