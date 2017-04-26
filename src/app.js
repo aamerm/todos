@@ -4,11 +4,12 @@ import {TodoList} from './todolist'
 import PropTypes from 'prop-types';
 
 export const App = (props, context) => {
+	debugger;
 	return <div className="app">
 		<h1>Todos</h1>
 		<TodoList
 			todos={context.store.getState().todos}
-			onToggleCompletedTodo={(index)=>context.store.dispatch({type: 'TOGGLE_COMPLETED', index})}
+			onToggleCompletedTodo={(index)=>context.store.dispatch({type: 'TOGGLE_COMPLETED', index:index})}
 		/>
 	</div>;
 }
